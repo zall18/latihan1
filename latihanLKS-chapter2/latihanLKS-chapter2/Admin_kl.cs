@@ -29,7 +29,7 @@ namespace latihanLKS_chapter2
             conn.Open();
             cmd = conn.CreateCommand();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "SELECT * FROM [tbl_transaksi]";
+            cmd.CommandText = "SELECT * FROM [tbl_transaksi] WHERE tgl_transaksi BETWEEN '" + awal.Text + "' AND '" + akhir.Text + "'";
             dr = new SqlDataAdapter(cmd);
             dt = new DataTable();
             dr.Fill(dt);
@@ -42,7 +42,7 @@ namespace latihanLKS_chapter2
             conn.Open();
             cmd = conn.CreateCommand();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "SELECT FORMAT(tbl_transaksi.tgl_transaksi, 'yyyy/MM/dd') AS date, SUM(tbl_transaksi.total_bayar) AS harga FROM [tbl_transaksi] WHERE tgl_transaksi BETWEEN '" + awal.Text + "' AND '" + akhir.Text + "' GROUP BY FORMAT(tbl_transaksi.tgl_transaksi, 'yyyy/MM/dd') ";
+            cmd.CommandText = "SELECT tgl_transaksi AS date, SUM(tbl_transaksi.total_bayar) AS harga FROM [tbl_transaksi] WHERE tgl_transaksi BETWEEN '" + awal.Text + "' AND '" + akhir.Text + "' GROUP BY tgl_transaksi";
             rd = cmd.ExecuteReader();
             int i = 0;
          
@@ -50,7 +50,7 @@ namespace latihanLKS_chapter2
             {
                 string date = rd["date"].ToString();
                 double harga = Convert.ToDouble(rd["harga"]);
-                chart1.Series.Add("Omset");
+          
                 chart1.Series[i].Points.AddXY(date, harga);
             }
             conn.Close();

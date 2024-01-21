@@ -125,7 +125,7 @@ namespace latihanLKS_chapter2
             conn.Open();
             cmd = conn.CreateCommand();
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "SELECT * FROM [tbl_gudang] WHERE nama_barang LIKE '%"+ this.search.Text +"%'";
+            cmd.CommandText = "SELECT * FROM [tbl_barang] WHERE nama_barang LIKE '%"+ this.search.Text +"%'";
             dr = new SqlDataAdapter(cmd);
             dt = new DataTable();
             dr.Fill(dt);

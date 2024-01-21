@@ -35,6 +35,18 @@ namespace latihanLKS_chapter2
             conn.Close();
         }
 
+        public void tabel_load()
+        {
+            dt = new DataTable();
+            dt.Columns.Add("ID", Type.GetType("System.Int32"));
+            dt.Columns.Add("Kode_brang", Type.GetType("System.String"));
+            dt.Columns.Add("Nama_barang", Type.GetType("System.String"));
+            dt.Columns.Add("Harga_satuan", Type.GetType("System.Int32"));
+            dt.Columns.Add("Quantitas", Type.GetType("System.Int32"));
+            dt.Columns.Add("Subtotal", Type.GetType("System.String"));
+            guna2DataGridView1.DataSource = dt;
+        }
+
         public Kasir()
         {
             InitializeComponent();
@@ -71,6 +83,7 @@ namespace latihanLKS_chapter2
                 int total = hb * q;
                 th.Text = total.ToString();
             }
+
         }
 
         private void guna2Button4_Click(object sender, EventArgs e)
@@ -111,7 +124,28 @@ namespace latihanLKS_chapter2
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            
+            int total = int.Parse(tb.Text);
+            int bayar;
+
+            if(int.TryParse(ub.Text, out bayar))
+            {
+                if(bayar < total)
+                {
+                    MessageBox.Show("Pembayaran Kurang!", "FAILED", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ub.Text = null;
+                }
+                else
+                {
+                    MessageBox.Show("Pembayaran Berhasil!", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int kembali = bayar - total;
+                    uk.Text = kembali.ToString();
+
+                    tb.Text = "-";
+                    ub.Text = null;
+                }
+            }
+
+
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -149,22 +183,20 @@ namespace latihanLKS_chapter2
 
         private void Kasir_Load(object sender, EventArgs e)
         {
-            dt = new DataTable();
-            dt.Columns.Add("ID", Type.GetType("System.Int32"));
-            dt.Columns.Add("Kode_brang", Type.GetType("System.String"));
-            dt.Columns.Add("Nama_barang", Type.GetType("System.String"));
-            dt.Columns.Add("Harga_satuan", Type.GetType("System.Int32"));
-            dt.Columns.Add("Quantitas", Type.GetType("System.Int32"));
-            dt.Columns.Add("Subtotal", Type.GetType("System.String"));
-            guna2DataGridView1.DataSource = dt;
+            tabel_load();
         }
 
         private void guna2Button3_Click(object sender, EventArgs e)
         {
-            printPreviewDialog1.Document = printDocument1;
-            printDocument1.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("Struk Detail", 320, 500);
-            printPreviewDialog1.ShowDialog();
+            print p = new print();
+            p.Show();
+        }
 
+        private void guna2Button6_Click(object sender, EventArgs e)
+        {
+            guna2DataGridView1.Columns.Clear();
+            tabel_load();
+            uk.Text = "-";
         }
     }
 }

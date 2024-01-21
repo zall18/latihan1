@@ -22,7 +22,7 @@ namespace latihanLKS_chapter2
         private void print_Load(object sender, EventArgs e)
         {
             ReportDocument cr = new ReportDocument();
-            cr.Load("C:\\Users\\Administrator\\source\\repos\\latihanLKS-chapter2\\latihanLKS-chapter2");
+            cr.Load("C:\\Users\\Administrator\\source\\repos\\latihanLKS-chapter2\\latihanLKS-chapter2\\CrystalReport1.rpt");
             crystalReportViewer1.ReportSource = cr;
             crystalReportViewer1.Refresh();
         }
